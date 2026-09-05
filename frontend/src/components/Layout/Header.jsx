@@ -38,10 +38,10 @@ const Header = () => {
     <>
       <Box bg="brand.primary" px={10} boxShadow="sm" position="sticky" top={0} zIndex={1000}>
         <Flex h={16} alignItems="center" justifyContent="space-between">
-          {/* Logo con imagen REAL */}
-          <Flex alignItems="center">
+          {/* Logo: lleva al inicio */}
+          <Flex as={Link} to="/" alignItems="center">
             <Box boxSize="90px" mr={3}>
-              <Image 
+              <Image
                 src="/assets/Logo.png"  // Ruta desde la carpeta public
                 alt="Logo Euforia"
                 objectFit="contain"
@@ -50,9 +50,9 @@ const Header = () => {
                 borderRadius="md"
               />
             </Box>
-            <Text 
-              fontSize="xl" 
-              fontWeight="bold" 
+            <Text
+              fontSize="xl"
+              fontWeight="bold"
               color="white"
               fontFamily="heading"
             >

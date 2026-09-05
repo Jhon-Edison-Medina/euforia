@@ -662,17 +662,6 @@ const Recursos = () => {
                     <Text color="gray.600" mb={4} noOfLines={3}>
                       {recurso.descripcion}
                     </Text>
-
-                    <Button
-                      rightIcon={<ChevronRightIcon />}
-                      colorScheme="brand"
-                      variant="outline"
-                      size="sm"
-                      w="full"
-                      onClick={(e) => { e.stopPropagation(); handleOpenModal(recurso); }}
-                    >
-                      Ver detalles
-                    </Button>
                   </CardBody>
                 </Card>
               ))}

@@ -702,17 +702,6 @@ const Actividades = () => {
                         <Text>📍 {actividad.ubicacion.substring(0, 25)}...</Text>
                       )}
                     </VStack>
-
-                    <Button
-                      rightIcon={<ChevronRightIcon />}
-                      colorScheme="brand"
-                      variant="outline"
-                      size="sm"
-                      w="full"
-                      onClick={(e) => { e.stopPropagation(); handleOpenModal(actividad); }}
-                    >
-                      Ver detalles
-                    </Button>
                   </CardBody>
                 </Card>
               ))}

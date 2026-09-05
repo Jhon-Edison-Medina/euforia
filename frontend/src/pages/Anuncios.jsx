@@ -34,7 +34,6 @@ import {
   Tag,
   TagLabel,
   TagLeftIcon,
-  Tooltip,
   Icon,
 } from '@chakra-ui/react';
 import {
@@ -42,16 +41,14 @@ import {
   CloseIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  DownloadIcon,
   CalendarIcon,
   TimeIcon,
   StarIcon,
-  AttachmentIcon,
 } from '@chakra-ui/icons';
 import { announcementsAPI } from '../services/api';
 import { optimizarUrlCloudinary } from '../services/cloudinary';
 import { Link } from 'react-router-dom';
-import { FaImages, FaVideo, FaFileImage } from 'react-icons/fa';
+import { FaImages } from 'react-icons/fa';
 
 // Configuración de paginación
 const ITEMS_PER_PAGE = 9;
@@ -464,47 +461,6 @@ const Anuncios = () => {
                   {selectedAnuncio.contenido}
                 </Text>
 
-                {/* Lista de archivos adjuntos */}
-                {multimedia.length > 0 && (
-                  <Box mt={6}>
-                    <Text fontWeight="bold" mb={2}>Archivos adjuntos:</Text>
-                    <SimpleGrid columns={{ base: 2, md: 3 }} spacing={2}>
-                      {multimedia.map((file, idx) => (
-                        <HStack
-                          key={idx}
-                          p={2}
-                          bg="gray.50"
-                          borderRadius="md"
-                          justify="space-between"
-                        >
-                          <HStack spacing={2} minW={0}>
-                            <Icon
-                              as={file.tipo.startsWith('video/') ? FaVideo : FaFileImage}
-                              color={file.tipo.startsWith('video/') ? 'red.500' : 'blue.500'}
-                            />
-                            <Text fontSize="sm" noOfLines={1}>
-                              {file.nombre || `Archivo ${idx + 1}`}
-                            </Text>
-                          </HStack>
-                          <Tooltip label="Descargar">
-                            <IconButton
-                              icon={<DownloadIcon />}
-                              size="xs"
-                              variant="ghost"
-                              onClick={() => {
-                                const link = document.createElement('a');
-                                link.href = file.url;
-                                link.download = file.nombre || `archivo-${idx+1}`;
-                                link.click();
-                              }}
-                              aria-label="Descargar"
-                            />
-                          </Tooltip>
-                        </HStack>
-                      ))}
-                    </SimpleGrid>
-                  </Box>
-                )}
               </Box>
             </VStack>
           </ModalBody>
@@ -630,17 +586,6 @@ const Anuncios = () => {
                       <Text color="gray.600" mb={4} noOfLines={3}>
                         {anuncio.contenido}
                       </Text>
-
-                      <Button
-                        rightIcon={<ChevronRightIcon />}
-                        colorScheme="brand"
-                        variant="outline"
-                        size="sm"
-                        w="full"
-                        onClick={(e) => { e.stopPropagation(); handleOpenModal(anuncio); }}
-                      >
-                        Ver detalles
-                      </Button>
                     </CardBody>
                   </Card>
                 );
