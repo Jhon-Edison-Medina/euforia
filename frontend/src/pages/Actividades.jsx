@@ -403,7 +403,7 @@ const Actividades = () => {
                     overflow="hidden"
                     border="1px solid"
                     borderColor="gray.200"
-                    bg="black"
+                    bg="gray.100"
                     position="relative"
                   >
                     {currentMedia.tipo?.startsWith('video/') ? (
