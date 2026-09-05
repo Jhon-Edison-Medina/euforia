@@ -324,7 +324,7 @@ const Home = () => {
       {/* Hero Section */}
       <Box
         color="white"
-        py={{ base: 14, md: 32 }}
+        py={{ base: 12, md: 20 }}
         position="relative"
         overflow="hidden"
       >
@@ -392,7 +392,7 @@ const Home = () => {
       </Box>
 
       {/* Sección Quiénes Somos */}
-      <Box bg="white" py={16}>
+      <Box bg="white" py={12}>
         <Container maxW="container.xl">
           <MotionBox {...fadeInUp}>
             <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={10} alignItems="center">
@@ -434,8 +434,8 @@ const Home = () => {
       </Box>
 
       {/* Sección de Próximas Actividades (Anuncios) */}
-      <Container maxW="container.xl" py={16}>
-        <MotionVStack spacing={8} {...fadeInUp}>
+      <Container maxW="container.xl" py={12}>
+        <MotionVStack spacing={6} {...fadeInUp}>
           <Box textAlign="center">
             <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary" mb={4}>
               Entérate de todo lo que pasa en Euforia
@@ -586,16 +586,16 @@ const Home = () => {
       </Container>
 
       {/* Sección de Enfoques */}
-      <Box bg="brand.accent1" py={16}>
+      <Box bg="brand.accent1" py={12}>
         <Container maxW="container.xl">
-          <MotionVStack spacing={12} {...fadeInUp}>
+          <MotionVStack spacing={6} {...fadeInUp}>
             <Box textAlign="center">
               <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary" mb={4}>
                 Nuestros Enfoques
               </Heading>
             </Box>
 
-            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8} w="100%">
+            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6} w="100%">
               {[
                 {
                   title: 'Género y Feminismo',
@@ -632,8 +632,8 @@ const Home = () => {
       </Box>
 
       {/* Sección de Actividades Destacadas */}
-      <Container maxW="container.xl" py={16}>
-        <MotionVStack spacing={8} {...fadeInUp}>
+      <Container maxW="container.xl" py={12}>
+        <MotionVStack spacing={6} {...fadeInUp}>
           <Box textAlign="center">
             <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary" mb={4}>
               🎯 Actividades Destacadas
@@ -738,9 +738,9 @@ const Home = () => {
       </Container>
 
       {/* Sección de Recursos Recientes */}
-      <Box bg="brand.accent1" py={16}>
+      <Box bg="brand.accent1" py={12}>
         <Container maxW="container.xl">
-          <MotionVStack spacing={8} {...fadeInUp}>
+          <MotionVStack spacing={6} {...fadeInUp}>
             <Box textAlign="center">
               <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary" mb={4}>
                 📚 Recursos Recientes
