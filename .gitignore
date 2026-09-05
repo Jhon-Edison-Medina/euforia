@@ -15,3 +15,6 @@ backend/uploads/*
 *.log
 .DS_Store
 Thumbs.db
+
+# Respaldos locales de migraciones (no deben subirse al repo)
+backup-legacy-media-*.json
