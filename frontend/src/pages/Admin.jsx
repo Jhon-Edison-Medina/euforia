@@ -118,7 +118,7 @@ const AdminDashboard = () => {
                       type="password"
                       value={loginData.password}
                       onChange={(e) => setLoginData(prev => ({...prev, password: e.target.value}))}
-                      placeholder="euforia2024"
+                      placeholder="••••••••"
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -144,13 +144,6 @@ const AdminDashboard = () => {
                 </VStack>
               </form>
               
-              <Box mt={6} p={4} bg="blue.50" borderRadius="md">
-                <Text fontSize="sm" color="blue.700" textAlign="center">
-                  <strong>Credenciales:</strong><br/>
-                  Usuario: <strong>admin</strong><br/>
-                  Contraseña: <strong>euforia2024</strong>
-                </Text>
-              </Box>
             </CardBody>
           </Card>
         </VStack>

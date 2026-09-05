@@ -550,38 +550,15 @@ export const announcementsAPI = {
 export const authAPI = {
   login: async (credentials) => {
     try {
-      try {
-        const response = await api.post('/api/auth/login', credentials);
-        
-        if (response.data?.token) {
-          localStorage.setItem('euforia_token', response.data.token);
-          localStorage.setItem('euforia_user', JSON.stringify(response.data.user || {}));
-          console.log('✅ Autenticación exitosa con servidor');
-        }
-        
-        return response;
-      } catch (serverError) {
-        console.warn('⚠️ Servidor no disponible, usando autenticación local');
-        
-        if (credentials.username === 'admin' && credentials.password === 'euforia2024') {
-          const token = 'euforia-token-local-' + Date.now();
-          const user = {
-            username: 'admin',
-            name: 'Administrador',
-            role: 'admin',
-            email: 'admin@euforia.org'
-          };
-          
-          localStorage.setItem('euforia_token', token);
-          localStorage.setItem('euforia_user', JSON.stringify(user));
-          
-          return {
-            data: { token, user }
-          };
-        }
-        
-        throw new Error('Credenciales incorrectas');
+      const response = await api.post('/api/auth/login', credentials);
+
+      if (response.data?.token) {
+        localStorage.setItem('euforia_token', response.data.token);
+        localStorage.setItem('euforia_user', JSON.stringify(response.data.user || {}));
+        console.log('✅ Autenticación exitosa con servidor');
       }
+
+      return response;
     } catch (error) {
       console.error('❌ Error en autenticación:', error);
       throw error;
@@ -904,7 +881,7 @@ export const initDefaultData = () => {
         {
           id: '1',
           username: 'admin',
-          password: 'euforia2024',
+          password: 'changeme',
           nombre: 'Administrador',
           email: 'admin@euforia.org',
           role: 'admin',

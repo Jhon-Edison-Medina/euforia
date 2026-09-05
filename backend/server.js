@@ -937,13 +937,13 @@ async function initializeDatabase() {
     if (!existingUser) {
       const adminUser = new User({
         username: 'admin',
-        password: 'euforia2024',
+        password: process.env.ADMIN_DEFAULT_PASSWORD || 'changeme',
         email: 'euforiacddhheducacion@gmail.com',
         role: 'admin',
         activo: true
       });
       await adminUser.save();
-      console.log('👤 Usuario administrador creado: admin / euforia2024');
+      console.log('👤 Usuario administrador creado: admin (contraseña definida en el código)');
     } else {
       console.log('👤 Usuario administrador ya existe');
     }
@@ -993,7 +993,6 @@ app.listen(PORT, () => {
   console.log(`🔑 Login: http://localhost:${PORT}/api/auth/login`);
   console.log(`📁 Debug Auth: http://localhost:${PORT}/api/debug/auth`);
   console.log(`👤 Usuario: admin`);
-  console.log(`🔒 Contraseña: euforia2024`);
   console.log('='.repeat(60));
   
   initializeDatabase();
