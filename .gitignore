@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+
+# Variables de entorno (contienen contraseñas y claves secretas)
+.env
+.env.local
+.env.*.local
+
+# Archivos subidos localmente (ya no se usan, pero por si acaso)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Logs y temporales
+*.log
+.DS_Store
+Thumbs.db

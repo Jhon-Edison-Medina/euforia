@@ -1,0 +1,13 @@
+{
+  "announcements": [],
+  "activities": [],
+  "resources": [],
+  "usuarios": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "euforia2024",
+      "nombre": "Administrador Euforia"
+    }
+  ]
+}
