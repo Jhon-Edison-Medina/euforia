@@ -315,7 +315,7 @@ const Actividades = () => {
         {esVideo ? (
           <video
             src={info.url}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
             muted
             loop
             onMouseEnter={e => e.target.play()}
@@ -325,7 +325,7 @@ const Actividades = () => {
           <img
             src={info.url}
             alt={actividad.titulo}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
           />
         ) : esImagen ? (
           <Image
@@ -334,6 +334,7 @@ const Actividades = () => {
             w="100%"
             h="100%"
             objectFit="cover"
+            objectPosition="top"
             loading="lazy"
           />
         ) : (

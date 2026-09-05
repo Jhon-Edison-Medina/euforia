@@ -252,7 +252,7 @@ const Anuncios = () => {
         {info.esVideo ? (
           <video
             src={info.url}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
             muted
             loop
             onMouseEnter={e => e.target.play()}
@@ -262,7 +262,7 @@ const Anuncios = () => {
           <img
             src={info.url}
             alt={anuncio.titulo}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
           />
         ) : (
           <Image
@@ -271,6 +271,7 @@ const Anuncios = () => {
             w="100%"
             h="100%"
             objectFit="cover"
+            objectPosition="top"
             loading="lazy"
           />
         )}

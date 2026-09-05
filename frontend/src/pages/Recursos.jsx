@@ -297,7 +297,7 @@ const Recursos = () => {
         {esVideo ? (
           <video
             src={info.url}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
             muted
             loop
             onMouseEnter={e => e.target.play()}
@@ -307,7 +307,7 @@ const Recursos = () => {
           <img
             src={info.url}
             alt={recurso.titulo}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
           />
         ) : esImagen ? (
           <Image
@@ -316,6 +316,7 @@ const Recursos = () => {
             w="100%"
             h="100%"
             objectFit="cover"
+            objectPosition="top"
             loading="lazy"
           />
         ) : (

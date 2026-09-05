@@ -402,14 +402,14 @@ const Home = () => {
                             <img
                               src={imagenInfo.url}
                               alt={activity.titulo}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                             />
                           </Box>
                         ) : imagenInfo.esVideo ? (
                           <Box h="180px" w="100%" bg="gray.100" overflow="hidden">
                             <video
                               src={imagenInfo.url}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                               muted
                               loop
                               onMouseEnter={e => e.target.play()}
@@ -424,6 +424,7 @@ const Home = () => {
                               w="100%"
                               h="100%"
                               objectFit="cover"
+                              objectPosition="top"
                             />
                           </Box>
                         )
@@ -607,6 +608,7 @@ const Home = () => {
                             w="100%"
                             h="100%"
                             objectFit="cover"
+                            objectPosition="top"
                             fallback={
                               <Flex w="100%" h="100%" align="center" justify="center" bg="brand.primary">
                                 <Text fontSize="4xl" color="white">
