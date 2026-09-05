@@ -252,7 +252,7 @@ const Anuncios = () => {
         {info.esVideo ? (
           <video
             src={info.url}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             muted
             loop
             onMouseEnter={e => e.target.play()}

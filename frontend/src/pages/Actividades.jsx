@@ -315,7 +315,7 @@ const Actividades = () => {
         {esVideo ? (
           <video
             src={info.url}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             muted
             loop
             onMouseEnter={e => e.target.play()}
@@ -329,7 +329,7 @@ const Actividades = () => {
           />
         ) : esImagen ? (
           <Image
-            src={info.thumbnail || info.url}
+            src={info.url}
             alt={actividad.titulo}
             w="100%"
             h="100%"

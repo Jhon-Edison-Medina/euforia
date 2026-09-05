@@ -409,7 +409,7 @@ const Home = () => {
                           <Box h="180px" w="100%" bg="gray.100" overflow="hidden">
                             <video
                               src={imagenInfo.url}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                               muted
                               loop
                               onMouseEnter={e => e.target.play()}
