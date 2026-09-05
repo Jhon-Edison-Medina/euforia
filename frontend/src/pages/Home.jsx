@@ -116,13 +116,13 @@ const Home = () => {
     try {
       console.log('📥 Cargando datos desde MongoDB...');
       
-      const anunciosResponse = await announcementsAPI.getAll();
+      const [anunciosResponse, actividadesResponse, recursosResponse] = await Promise.all([
+        announcementsAPI.getAll(),
+        activitiesAPI.getAll(),
+        resourcesAPI.getAll()
+      ]);
       const anuncios = anunciosResponse.data || [];
-      
-      const actividadesResponse = await activitiesAPI.getAll();
       const actividadesData = actividadesResponse.data || [];
-      
-      const recursosResponse = await resourcesAPI.getAll();
       const recursosData = recursosResponse.data || [];
       
       // A. ANUNCIOS PARA CARRUSEL
