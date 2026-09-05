@@ -49,6 +49,7 @@ import {
   AttachmentIcon,
 } from '@chakra-ui/icons';
 import { announcementsAPI } from '../services/api';
+import { optimizarUrlCloudinary } from '../services/cloudinary';
 import { Link } from 'react-router-dom';
 import { FaImages, FaVideo, FaFileImage } from 'react-icons/fa';
 
@@ -170,9 +171,9 @@ const Anuncios = () => {
     if (anuncio.multimedia && anuncio.multimedia.length > 0) {
       const primero = anuncio.multimedia[0];
       return {
-        url: primero.url,
+        url: optimizarUrlCloudinary(primero.url),
         tipo: primero.tipo,
-        thumbnail: primero.thumbnail || primero.url,
+        thumbnail: optimizarUrlCloudinary(primero.thumbnail || primero.url, 400),
         esVideo: primero.tipo.startsWith('video/'),
         esGif: primero.tipo === 'image/gif' || primero.tipo.includes('gif'),
         count: anuncio.multimedia.length,
@@ -182,9 +183,9 @@ const Anuncios = () => {
       const esVideo = anuncio.tipoArchivo?.startsWith('video/') || anuncio.nombreArchivo?.match(/\.(mp4|avi|mov|wmv|webm|ogg)$/);
       const esGif = anuncio.tipoArchivo === 'image/gif' || anuncio.nombreArchivo?.endsWith('.gif');
       return {
-        url: anuncio.archivo,
+        url: optimizarUrlCloudinary(anuncio.archivo),
         tipo: anuncio.tipoArchivo,
-        thumbnail: anuncio.thumbnail || anuncio.archivo,
+        thumbnail: optimizarUrlCloudinary(anuncio.thumbnail || anuncio.archivo, 400),
         esVideo,
         esGif,
         count: 1,

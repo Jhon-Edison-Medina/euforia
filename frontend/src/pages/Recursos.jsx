@@ -56,6 +56,7 @@ import {
   FaFileCode,
 } from 'react-icons/fa';
 import { resourcesAPI } from '../services/api';
+import { optimizarUrlCloudinary } from '../services/cloudinary';
 import { Link } from 'react-router-dom';
 
 const ITEMS_PER_PAGE = 9;
@@ -207,9 +208,9 @@ const Recursos = () => {
     if (recurso.multimedia && recurso.multimedia.length > 0) {
       const primero = recurso.multimedia[0];
       return {
-        url: primero.url,
+        url: optimizarUrlCloudinary(primero.url),
         tipo: primero.tipo,
-        thumbnail: primero.thumbnail || primero.url,
+        thumbnail: optimizarUrlCloudinary(primero.thumbnail || primero.url, 400),
         nombre: primero.nombre,
         tamaño: primero.tamaño,
         count: recurso.multimedia.length,
@@ -219,9 +220,9 @@ const Recursos = () => {
       const esVideo = recurso.tipoArchivo?.startsWith('video/') || recurso.nombreArchivo?.match(/\.(mp4|avi|mov|wmv|webm|ogg)$/);
       const esGif = recurso.tipoArchivo === 'image/gif' || recurso.nombreArchivo?.endsWith('.gif');
       return {
-        url: recurso.archivo,
+        url: optimizarUrlCloudinary(recurso.archivo),
         tipo: recurso.tipoArchivo || (esGif ? 'image/gif' : esVideo ? 'video' : 'image'),
-        thumbnail: recurso.thumbnail || recurso.archivo,
+        thumbnail: optimizarUrlCloudinary(recurso.thumbnail || recurso.archivo, 400),
         nombre: recurso.nombreArchivo,
         tamaño: recurso.tamañoArchivo,
         count: 1,

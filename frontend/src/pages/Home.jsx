@@ -21,6 +21,7 @@ import {
 import { Link } from 'react-router-dom';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { announcementsAPI, activitiesAPI, resourcesAPI } from '../services/api';
+import { optimizarUrlCloudinary } from '../services/cloudinary';
 
 const Home = () => {
   const [featuredAnnouncements, setFeaturedAnnouncements] = useState([]);
@@ -40,7 +41,7 @@ const Home = () => {
       );
       if (primeraImagen) {
         return {
-          url: primeraImagen.url,
+          url: optimizarUrlCloudinary(primeraImagen.url),
           tipo: primeraImagen.tipo,
           esVideo: false,
           esGif: primeraImagen.tipo === 'image/gif' || primeraImagen.tipo.includes('gif')
@@ -49,7 +50,7 @@ const Home = () => {
       // Si no hay imagen, tomar el primer elemento (puede ser video)
       const primero = anuncio.multimedia[0];
       return {
-        url: primero.url,
+        url: optimizarUrlCloudinary(primero.url),
         tipo: primero.tipo,
         esVideo: primero.tipo.startsWith('video/'),
         esGif: primero.tipo === 'image/gif' || primero.tipo.includes('gif')
@@ -61,7 +62,7 @@ const Home = () => {
       const esVideo = anuncio.tipoArchivo?.startsWith('video/') || anuncio.nombreArchivo?.match(/\.(mp4|avi|mov|wmv|webm|ogg)$/);
       const esGif = anuncio.tipoArchivo === 'image/gif' || anuncio.nombreArchivo?.endsWith('.gif');
       return {
-        url: anuncio.archivo,
+        url: optimizarUrlCloudinary(anuncio.archivo),
         tipo: anuncio.tipoArchivo,
         esVideo,
         esGif
@@ -71,7 +72,7 @@ const Home = () => {
     // 3. Campo imagen (para compatibilidad muy antigua)
     if (anuncio.imagen) {
       return {
-        url: anuncio.imagen,
+        url: optimizarUrlCloudinary(anuncio.imagen),
         tipo: 'image',
         esVideo: false,
         esGif: false
@@ -89,22 +90,22 @@ const Home = () => {
         item.tipo && (item.tipo.startsWith('image/') || item.tipo === 'image/gif')
       );
       if (primeraImagen) {
-        return primeraImagen.url; // o primeraImagen.thumbnail si existe
+        return optimizarUrlCloudinary(primeraImagen.url); // o primeraImagen.thumbnail si existe
       }
       // Si no hay imagen, puede ser video, pero no mostramos video como miniatura
     }
     // 2. Buscar en materiales (legacy)
     if (actividad.materiales && Array.isArray(actividad.materiales) && actividad.materiales.length > 0) {
-      const imagenMaterial = actividad.materiales.find(m => 
+      const imagenMaterial = actividad.materiales.find(m =>
         m.tipo && m.tipo.startsWith('image/')
       );
       if (imagenMaterial && imagenMaterial.archivo) {
-        return imagenMaterial.archivo;
+        return optimizarUrlCloudinary(imagenMaterial.archivo);
       }
     }
     // 3. Campos antiguos
-    if (actividad.imagenUrl) return actividad.imagenUrl;
-    if (actividad.imagen) return actividad.imagen;
+    if (actividad.imagenUrl) return optimizarUrlCloudinary(actividad.imagenUrl);
+    if (actividad.imagen) return optimizarUrlCloudinary(actividad.imagen);
     
     return null;
   };

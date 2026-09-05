@@ -73,6 +73,20 @@ export const uploadMultipleToCloudinary = async (files, options = {}, onProgress
  * @param {File} file - El archivo a subir.
  * @returns {Promise<{url: string, tipo: string, nombre: string, tamaño: number, thumbnail: string}>}
  */
+/**
+ * Devuelve una URL de Cloudinary optimizada para mostrar en pantalla
+ * (redimensionada y con formato/calidad automáticos), en vez de la imagen
+ * original completa. Si la URL no es de Cloudinary, la devuelve sin tocar.
+ * @param {string} url
+ * @param {number} maxWidth
+ */
+export const optimizarUrlCloudinary = (url, maxWidth = 1200) => {
+  if (!url || typeof url !== 'string' || !url.includes('res.cloudinary.com') || !url.includes('/image/upload/')) {
+    return url;
+  }
+  return url.replace('/upload/', `/upload/w_${maxWidth},q_auto,f_auto/`);
+};
+
 export const subirArchivoMultimedia = async (file) => {
   const secureUrl = await uploadToCloudinary(file);
   const esImagenTransformable = file.type.startsWith('image/') && file.type !== 'image/gif' && file.type !== 'image/svg+xml';

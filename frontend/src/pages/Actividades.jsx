@@ -56,6 +56,7 @@ import {
   FaFileCode,
 } from 'react-icons/fa';
 import { activitiesAPI } from '../services/api';
+import { optimizarUrlCloudinary } from '../services/cloudinary';
 import { Link } from 'react-router-dom';
 
 const ITEMS_PER_PAGE = 9;
@@ -218,9 +219,9 @@ const Actividades = () => {
     if (actividad.multimedia && actividad.multimedia.length > 0) {
       const primero = actividad.multimedia[0];
       return {
-        url: primero.url,
+        url: optimizarUrlCloudinary(primero.url),
         tipo: primero.tipo,
-        thumbnail: primero.thumbnail || primero.url,
+        thumbnail: optimizarUrlCloudinary(primero.thumbnail || primero.url, 400),
         nombre: primero.nombre,
         count: actividad.multimedia.length,
       };
@@ -228,9 +229,9 @@ const Actividades = () => {
     if (actividad.materiales && actividad.materiales.length > 0) {
       const primero = actividad.materiales[0];
       return {
-        url: primero.archivo || primero.url,
+        url: optimizarUrlCloudinary(primero.archivo || primero.url),
         tipo: primero.tipo || primero.tipoArchivo || 'image',
-        thumbnail: primero.thumbnail || primero.archivo || primero.url,
+        thumbnail: optimizarUrlCloudinary(primero.thumbnail || primero.archivo || primero.url, 400),
         nombre: primero.nombre,
         count: actividad.materiales.length,
       };
