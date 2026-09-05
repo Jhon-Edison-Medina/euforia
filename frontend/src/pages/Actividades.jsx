@@ -31,7 +31,6 @@ import {
   Stack,
   Skeleton,
   useToast,
-  Tooltip,
   Icon,
 } from '@chakra-ui/react';
 import {
@@ -514,42 +513,6 @@ const Actividades = () => {
                   {selectedActividad.descripcion}
                 </Text>
 
-                {/* Lista de materiales */}
-                {multimedia.length > 0 && (
-                  <Box mt={6}>
-                    <Text fontWeight="bold" mb={2}>Materiales de apoyo:</Text>
-                    <SimpleGrid columns={{ base: 2, md: 3 }} spacing={2}>
-                      {multimedia.map((file, idx) => (
-                        <HStack
-                          key={idx}
-                          p={2}
-                          bg="gray.50"
-                          borderRadius="md"
-                          justify="space-between"
-                        >
-                          <HStack spacing={2} minW={0}>
-                            <Icon
-                              as={getFileIcon(file.tipo, file.nombre)}
-                              color={file.tipo?.startsWith('video/') ? 'red.500' : file.tipo?.startsWith('image/') ? 'blue.500' : 'gray.500'}
-                            />
-                            <Text fontSize="sm" noOfLines={1}>
-                              {file.nombre || `Material ${idx + 1}`}
-                            </Text>
-                          </HStack>
-                          <Tooltip label="Ver">
-                            <IconButton
-                              icon={<ChevronRightIcon />}
-                              size="xs"
-                              variant="ghost"
-                              onClick={() => setCurrentMediaIndex(idx)}
-                              aria-label="Ver"
-                            />
-                          </Tooltip>
-                        </HStack>
-                      ))}
-                    </SimpleGrid>
-                  </Box>
-                )}
               </Box>
             </VStack>
           </ModalBody>

@@ -199,7 +199,6 @@ const Home = () => {
             return fechaB - fechaA;
           });
         
-        setFeaturedAnnouncements(anuncios.slice(0, 2));
         setActivities(anuncios.slice(0, 3));
       }
       
@@ -235,7 +234,6 @@ const Home = () => {
       
     } catch (localError) {
       console.error('Error cargando desde localStorage:', localError);
-      setFeaturedAnnouncements([]);
       setActivities([]);
       setDestacadasActividades([]);
       setResources([]);
@@ -692,33 +690,18 @@ const Home = () => {
               })}
             </SimpleGrid>
           ) : (
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} w="100%">
-              {[1, 2, 3].map((index) => (
-                <Card key={index} border="1px solid" borderColor="brand.accent1" _hover={{ shadow: 'lg' }}>
-                  <CardBody>
-                    <Badge colorScheme="blue" mb={3}>Próximamente</Badge>
-                    <Heading size="md" mb={2}>Actividad {index}</Heading>
-                    <Text color="gray.600" mb={4}>
-                      Descripción breve de la actividad con detalles importantes.
-                    </Text>
-                    <Button
-                      as={Link}
-                      to="/actividades"
-                      colorScheme="brand"
-                      variant="outline"
-                      size="sm"
-                      w="100%"
-                    >
-                      Ver más actividades
-                    </Button>
-                  </CardBody>
-                </Card>
-              ))}
-            </SimpleGrid>
+            <Box textAlign="center" py={10}>
+              <Text fontSize="lg" color="gray.500">
+                No hay actividades programadas en este momento.
+              </Text>
+              <Button as={Link} to="/contacto" mt={4} colorScheme="brand">
+                Contáctanos para más información
+              </Button>
+            </Box>
           )}
 
-          <Button 
-            as={Link} 
+          <Button
+            as={Link}
             to="/actividades" 
             size="lg" 
             colorScheme="brand" 
@@ -784,33 +767,14 @@ const Home = () => {
                 ))}
               </SimpleGrid>
             ) : (
-              <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} w="100%">
-                {[1, 2, 3].map((index) => (
-                  <Card key={index} bg="white" shadow="lg">
-                    <CardBody textAlign="center">
-                      <Text fontSize="3xl" mb={3}>📄</Text>
-                      <Heading as="h3" size="md" mb={3}>
-                        Recurso {index}
-                      </Heading>
-                      <Text color="gray.600" mb={4}>
-                        Descripción breve del recurso educativo.
-                      </Text>
-                      <Button
-                        as={Link}
-                        to="/recursos"
-                        colorScheme="brand"
-                        variant="solid"
-                        size="sm"
-                        w="100%"
-                        bg="brand.accent2"
-                        _hover={{ bg: 'brand.accent5' }}
-                      >
-                        Ver Recurso
-                      </Button>
-                    </CardBody>
-                  </Card>
-                ))}
-              </SimpleGrid>
+              <Box textAlign="center" py={10}>
+                <Text fontSize="lg" color="gray.600">
+                  No hay recursos disponibles en este momento.
+                </Text>
+                <Button as={Link} to="/contacto" mt={4} colorScheme="brand" bg="brand.accent2" _hover={{ bg: 'brand.accent5' }}>
+                  Contáctanos para más información
+                </Button>
+              </Box>
             )}
 
             <Button 
