@@ -6,8 +6,6 @@ import {
   Heading,
   Text,
   Button,
-  Grid,
-  GridItem,
   Card,
   CardBody,
   Badge,
@@ -15,21 +13,17 @@ import {
   SimpleGrid,
   Spinner,
   Image,
-  Flex,
-  IconButton
+  Flex
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { announcementsAPI, activitiesAPI, resourcesAPI } from '../services/api';
 import { optimizarUrlCloudinary } from '../services/cloudinary';
 
 const Home = () => {
-  const [featuredAnnouncements, setFeaturedAnnouncements] = useState([]);
   const [activities, setActivities] = useState([]);
   const [destacadasActividades, setDestacadasActividades] = useState([]);
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   // Función mejorada para obtener la imagen principal de un anuncio
   const getImagenAnuncio = (anuncio) => {
@@ -125,21 +119,17 @@ const Home = () => {
       const actividadesData = actividadesResponse.data || [];
       const recursosData = recursosResponse.data || [];
       
-      // A. ANUNCIOS PARA CARRUSEL
+      // A. ÚLTIMOS ANUNCIOS
       if (anuncios.length > 0) {
         const anunciosOrdenados = anuncios.sort((a, b) => {
           const fechaA = a.fecha ? new Date(a.fecha).getTime() : (a.createdAt ? new Date(a.createdAt).getTime() : 0);
           const fechaB = b.fecha ? new Date(b.fecha).getTime() : (b.createdAt ? new Date(b.createdAt).getTime() : 0);
           return fechaB - fechaA;
         });
-        
-        const anunciosRecientes = anunciosOrdenados.slice(0, 2);
-        setFeaturedAnnouncements(anunciosRecientes);
-        
+
         const anunciosParaActividades = anunciosOrdenados.slice(0, 3);
         setActivities(anunciosParaActividades);
       } else {
-        setFeaturedAnnouncements([]);
         setActivities([]);
       }
       
@@ -267,30 +257,6 @@ const Home = () => {
     };
   }, []);
 
-  useEffect(() => {
-    let interval;
-    if (featuredAnnouncements.length > 1) {
-      interval = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % featuredAnnouncements.length);
-      }, 4000);
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [featuredAnnouncements.length, currentSlide]);
-
-  const nextSlide = () => {
-    if (featuredAnnouncements.length > 1) {
-      setCurrentSlide((prev) => (prev + 1) % featuredAnnouncements.length);
-    }
-  };
-
-  const prevSlide = () => {
-    if (featuredAnnouncements.length > 1) {
-      setCurrentSlide((prev) => (prev - 1 + featuredAnnouncements.length) % featuredAnnouncements.length);
-    }
-  };
-
   const formatDateForDisplay = (dateString) => {
     if (!dateString) return 'Próximamente';
     try {
@@ -331,224 +297,57 @@ const Home = () => {
   return (
     <Box>
       {/* Hero Section */}
-      <Box 
-        color="white" 
-        py={{ base: 12, md: 20 }}
+      <Box
+        color="white"
+        py={{ base: 20, md: 32 }}
         position="relative"
-        background="linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/assets/Fondo.jpg')"
+        background="linear-gradient(rgba(37,32,60,0.75), rgba(37,32,60,0.75)), url('/assets/Fondo.jpg')"
         backgroundSize="cover"
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
       >
-        <Container maxW="container.xl" position="relative" zIndex={1}>
-          <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={10} alignItems="center">
-            <GridItem>
-              <VStack align="start" spacing={6}>
-                <Heading as="h1" size={{ base: "xl", md: "2xl" }} fontFamily="heading" lineHeight="1.2">
-                  CENTRO DE DERECHOS<br />HUMANOS Y EDUCACIÓN
-                </Heading>
-                <Text fontSize={{ base: "lg", md: "xl" }} opacity={0.9}>
-                  Incentivamos el pensamiento crítico para el cambio social a través de 
-                  la educación popular y la agricultura urbana en Soacha.
-                </Text>
-                <HStack spacing={4} flexWrap="wrap">
-                  <Button 
-                    as={Link} 
-                    to="/actividades" 
-                    size={{ base: "md", md: "lg" }}
-                    colorScheme="white" 
-                    variant="solid"
-                  >
-                    Ver Actividades
-                  </Button>
-                  <Button 
-                    as={Link} 
-                    to="/quienes-somos" 
-                    size={{ base: "md", md: "lg" }}
-                    variant="outline" 
-                    color="white"
-                    borderColor="white"
-                    _hover={{ bg: 'white', color: 'brand.primary' }}
-                  >
-                    Conócenos
-                  </Button>
-                </HStack>
-              </VStack>
-            </GridItem>
-            <GridItem>
-              {/* CARRUSEL */}
-              {loading ? (
-                <Flex h="300px" align="center" justify="center">
-                  <Spinner size="xl" color="white" />
-                </Flex>
-              ) : featuredAnnouncements.length > 0 ? (
-                <Box position="relative" maxW="400px" mx="auto">
-                  <Box
-                    borderRadius="lg"
-                    overflow="hidden"
-                    boxShadow="2xl"
-                    border="2px solid"
-                    borderColor="white"
-                    height="300px"
-                    position="relative"
-                    bg="black"
-                  >
-                    {featuredAnnouncements.map((announcement, index) => {
-                      const imagenInfo = getImagenAnuncio(announcement);
-                      const tieneImagen = imagenInfo && imagenInfo.url;
-                      return (
-                        <Box
-                          key={announcement._id || announcement.id || index}
-                          position="absolute"
-                          top={0}
-                          left={0}
-                          width="100%"
-                          height="100%"
-                          opacity={index === currentSlide ? 1 : 0}
-                          transition="opacity 0.5s ease-in-out"
-                        >
-                          {tieneImagen ? (
-                            imagenInfo.esGif ? (
-                              <img
-                                src={imagenInfo.url}
-                                alt={announcement.titulo}
-                                style={{
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'contain',
-                                  backgroundColor: '#000'
-                                }}
-                              />
-                            ) : imagenInfo.esVideo ? (
-                              <Box
-                                bg="black"
-                                w="100%"
-                                h="100%"
-                                display="flex"
-                                alignItems="center"
-                                justifyContent="center"
-                              >
-                                <video
-                                  src={imagenInfo.url}
-                                  style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-                                  muted
-                                  loop
-                                  onMouseEnter={e => e.target.play()}
-                                  onMouseLeave={e => e.target.pause()}
-                                />
-                              </Box>
-                            ) : (
-                              <Image
-                                src={imagenInfo.url}
-                                alt={announcement.titulo}
-                                w="100%"
-                                h="100%"
-                                objectFit="contain"
-                                bg="black"
-                              />
-                            )
-                          ) : (
-                            <Box
-                              bg="brand.primary"
-                              w="100%"
-                              h="100%"
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="center"
-                              p={6}
-                            >
-                              <VStack spacing={4} color="white" textAlign="center">
-                                <Text fontSize="2xl">📢</Text>
-                                <Heading size="md">{announcement.titulo}</Heading>
-                                <Text noOfLines={3}>{announcement.contenido}</Text>
-                              </VStack>
-                            </Box>
-                          )}
-                          
-                          <Box
-                            position="absolute"
-                            bottom={0}
-                            left={0}
-                            right={0}
-                            bg="linear-gradient(transparent, rgba(0,0,0,0.8))"
-                            color="white"
-                            p={4}
-                          >
-                            {imagenInfo?.esGif && (
-                              <Badge colorScheme="green" mb={2} mr={2}>
-                                🎬 GIF
-                              </Badge>
-                            )}
-                            {imagenInfo?.esVideo && (
-                              <Badge colorScheme="red" mb={2} mr={2}>
-                                🎥 Video
-                              </Badge>
-                            )}
-                            <Badge colorScheme="blue" mb={2}>
-                              {announcement.categoria || 'Anuncio'}
-                            </Badge>
-                            <Heading size="sm" noOfLines={1}>
-                              {announcement.titulo}
-                            </Heading>
-                          </Box>
-                        </Box>
-                      );
-                    })}
-                  </Box>
-                  
-                  {featuredAnnouncements.length > 1 && (
-                    <>
-                      <IconButton
-                        icon={<ChevronLeftIcon />}
-                        position="absolute"
-                        left="-40px"
-                        top="50%"
-                        transform="translateY(-50%)"
-                        onClick={prevSlide}
-                        colorScheme="whiteAlpha"
-                        aria-label="Anterior"
-                      />
-                      <IconButton
-                        icon={<ChevronRightIcon />}
-                        position="absolute"
-                        right="-40px"
-                        top="50%"
-                        transform="translateY(-50%)"
-                        onClick={nextSlide}
-                        colorScheme="whiteAlpha"
-                        aria-label="Siguiente"
-                      />
-                      
-                      <HStack spacing={2} justify="center" mt={4}>
-                        {featuredAnnouncements.map((_, index) => (
-                          <Box
-                            key={index}
-                            w="10px"
-                            h="10px"
-                            borderRadius="full"
-                            bg={index === currentSlide ? 'brand.accent2' : 'gray.300'}
-                            onClick={() => setCurrentSlide(index)}
-                            cursor="pointer"
-                            _hover={{ bg: 'brand.accent2' }}
-                          />
-                        ))}
-                      </HStack>
-                    </>
-                  )}
-                </Box>
-              ) : (
-                <Image 
-                  src="/assets/Anuncio 21-11-2025.png" 
-                  alt="Centro Euforia"
-                  w="100%"
-                  maxW="400px"
-                  mx="auto"
-                  borderRadius="lg"
-                  boxShadow="2xl"
-                />
-              )}
-            </GridItem>
-          </Grid>
+        <Container maxW="container.md" position="relative" zIndex={1}>
+          <VStack spacing={6} textAlign="center">
+            <Text
+              fontSize="sm"
+              fontWeight="bold"
+              letterSpacing="wider"
+              textTransform="uppercase"
+              color="brand.accent4"
+            >
+              Soacha, Colombia
+            </Text>
+            <Heading as="h1" size={{ base: "xl", md: "2xl" }} fontFamily="heading" lineHeight="1.2">
+              CENTRO DE DERECHOS<br />HUMANOS Y EDUCACIÓN
+            </Heading>
+            <Text fontSize={{ base: "lg", md: "xl" }} opacity={0.9} maxW="2xl">
+              Incentivamos el pensamiento crítico para el cambio social a través de
+              la educación popular y la agricultura urbana en Soacha.
+            </Text>
+            <HStack spacing={4} flexWrap="wrap" justify="center" pt={2}>
+              <Button
+                as={Link}
+                to="/actividades"
+                size={{ base: "md", md: "lg" }}
+                bg="brand.accent4"
+                color="brand.secondary"
+                _hover={{ bg: 'yellow.400' }}
+              >
+                Ver Actividades
+              </Button>
+              <Button
+                as={Link}
+                to="/quienes-somos"
+                size={{ base: "md", md: "lg" }}
+                variant="outline"
+                color="white"
+                borderColor="white"
+                _hover={{ bg: 'white', color: 'brand.primary' }}
+              >
+                Conócenos
+              </Button>
+            </HStack>
+          </VStack>
         </Container>
       </Box>
 
