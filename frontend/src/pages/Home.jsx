@@ -3,6 +3,7 @@ import {
   Box,
   Container,
   VStack,
+  Stack,
   Heading,
   Text,
   Button,
@@ -15,9 +16,12 @@ import {
   Image,
   Flex
 } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { announcementsAPI, activitiesAPI, resourcesAPI } from '../services/api';
 import { optimizarUrlCloudinary } from '../services/cloudinary';
+
+const MotionVStack = motion(VStack);
 
 const Home = () => {
   const [activities, setActivities] = useState([]);
@@ -299,15 +303,28 @@ const Home = () => {
       {/* Hero Section */}
       <Box
         color="white"
-        py={{ base: 20, md: 32 }}
+        py={{ base: 14, md: 32 }}
         position="relative"
-        background="linear-gradient(rgba(37,32,60,0.75), rgba(37,32,60,0.75)), url('/assets/Fondo.jpg')"
-        backgroundSize="cover"
-        backgroundPosition="center"
-        backgroundRepeat="no-repeat"
+        overflow="hidden"
       >
+        <Box
+          position="absolute"
+          inset={0}
+          backgroundImage="url('/assets/Fondo.jpg')"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          backgroundRepeat="no-repeat"
+          animation="heroZoom 20s ease-in-out infinite alternate"
+        />
+        <Box position="absolute" inset={0} bg="rgba(37,32,60,0.75)" />
         <Container maxW="container.md" position="relative" zIndex={1}>
-          <VStack spacing={6} textAlign="center">
+          <MotionVStack
+            spacing={{ base: 4, md: 6 }}
+            textAlign="center"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+          >
             <Text
               fontSize="sm"
               fontWeight="bold"
@@ -317,18 +334,19 @@ const Home = () => {
             >
               Soacha, Colombia
             </Text>
-            <Heading as="h1" size={{ base: "xl", md: "2xl" }} fontFamily="heading" lineHeight="1.2">
+            <Heading as="h1" size={{ base: "lg", md: "2xl" }} fontFamily="heading" lineHeight="1.2">
               CENTRO DE DERECHOS<br />HUMANOS Y EDUCACIÓN
             </Heading>
-            <Text fontSize={{ base: "lg", md: "xl" }} opacity={0.9} maxW="2xl">
+            <Text fontSize={{ base: "md", md: "xl" }} opacity={0.9} maxW="2xl">
               Incentivamos el pensamiento crítico para el cambio social a través de
               la educación popular y la agricultura urbana en Soacha.
             </Text>
-            <HStack spacing={4} flexWrap="wrap" justify="center" pt={2}>
+            <Stack direction={{ base: 'column', md: 'row' }} spacing={4} w={{ base: '100%', md: 'auto' }} pt={2}>
               <Button
                 as={Link}
                 to="/actividades"
                 size={{ base: "md", md: "lg" }}
+                w={{ base: '100%', md: 'auto' }}
                 bg="brand.accent4"
                 color="brand.secondary"
                 _hover={{ bg: 'yellow.400' }}
@@ -339,6 +357,7 @@ const Home = () => {
                 as={Link}
                 to="/quienes-somos"
                 size={{ base: "md", md: "lg" }}
+                w={{ base: '100%', md: 'auto' }}
                 variant="outline"
                 color="white"
                 borderColor="white"
@@ -346,8 +365,8 @@ const Home = () => {
               >
                 Conócenos
               </Button>
-            </HStack>
-          </VStack>
+            </Stack>
+          </MotionVStack>
         </Container>
       </Box>
 

@@ -23,3 +23,13 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+/* Zoom lento y continuo para el fondo del hero del Home */
+@keyframes heroZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
