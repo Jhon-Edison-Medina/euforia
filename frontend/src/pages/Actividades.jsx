@@ -311,11 +311,11 @@ const Actividades = () => {
     const esGif = info.tipo === 'image/gif' || info.tipo?.includes('gif');
 
     return (
-      <Box position="relative" h="200px" bg="black">
+      <Box position="relative" h="200px" bg="gray.100" overflow="hidden">
         {esVideo ? (
           <video
             src={info.url}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             muted
             loop
             onMouseEnter={e => e.target.play()}
@@ -325,7 +325,7 @@ const Actividades = () => {
           <img
             src={info.url}
             alt={actividad.titulo}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         ) : esImagen ? (
           <Image
@@ -333,7 +333,7 @@ const Actividades = () => {
             alt={actividad.titulo}
             w="100%"
             h="100%"
-            objectFit="contain"
+            objectFit="cover"
             loading="lazy"
           />
         ) : (

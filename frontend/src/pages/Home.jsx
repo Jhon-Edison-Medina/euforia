@@ -398,29 +398,18 @@ const Home = () => {
                     <CardBody p={0} overflow="hidden">
                       {imagenInfo ? (
                         imagenInfo.esGif ? (
-                          <Box bg="gray.900" h="180px" display="flex" alignItems="center" justifyContent="center">
+                          <Box bg="gray.100" h="180px" overflow="hidden">
                             <img
                               src={imagenInfo.url}
                               alt={activity.titulo}
-                              style={{
-                                maxHeight: '180px',
-                                maxWidth: '100%',
-                                objectFit: 'contain'
-                              }}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                           </Box>
                         ) : imagenInfo.esVideo ? (
-                          <Box
-                            h="180px"
-                            w="100%"
-                            bg="black"
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                          >
+                          <Box h="180px" w="100%" bg="gray.100" overflow="hidden">
                             <video
                               src={imagenInfo.url}
-                              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                               muted
                               loop
                               onMouseEnter={e => e.target.play()}
@@ -428,13 +417,13 @@ const Home = () => {
                             />
                           </Box>
                         ) : (
-                          <Box bg="gray.900" h="180px" display="flex" alignItems="center" justifyContent="center">
+                          <Box bg="gray.100" h="180px" overflow="hidden">
                             <Image
                               src={imagenInfo.url}
                               alt={activity.titulo}
-                              maxH="180px"
-                              maxW="100%"
-                              objectFit="contain"
+                              w="100%"
+                              h="100%"
+                              objectFit="cover"
                             />
                           </Box>
                         )
@@ -611,13 +600,13 @@ const Home = () => {
                   >
                     <CardBody p={0}>
                       {imagenActividad ? (
-                        <Box h="180px" w="100%" bg="gray.900" display="flex" alignItems="center" justifyContent="center">
+                        <Box h="180px" w="100%" bg="gray.100" overflow="hidden">
                           <Image
                             src={imagenActividad}
                             alt={actividad.titulo}
-                            maxH="180px"
-                            maxW="100%"
-                            objectFit="contain"
+                            w="100%"
+                            h="100%"
+                            objectFit="cover"
                             fallback={
                               <Flex w="100%" h="100%" align="center" justify="center" bg="brand.primary">
                                 <Text fontSize="4xl" color="white">

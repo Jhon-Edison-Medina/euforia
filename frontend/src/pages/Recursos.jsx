@@ -293,11 +293,11 @@ const Recursos = () => {
     const esGif = info.tipo === 'image/gif' || info.tipo?.includes('gif');
 
     return (
-      <Box position="relative" h="200px" bg="black">
+      <Box position="relative" h="200px" bg="gray.100" overflow="hidden">
         {esVideo ? (
           <video
             src={info.url}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             muted
             loop
             onMouseEnter={e => e.target.play()}
@@ -307,7 +307,7 @@ const Recursos = () => {
           <img
             src={info.url}
             alt={recurso.titulo}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         ) : esImagen ? (
           <Image
@@ -315,7 +315,7 @@ const Recursos = () => {
             alt={recurso.titulo}
             w="100%"
             h="100%"
-            objectFit="contain"
+            objectFit="cover"
             loading="lazy"
           />
         ) : (
