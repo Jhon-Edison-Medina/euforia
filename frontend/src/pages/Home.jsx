@@ -4,6 +4,8 @@ import {
   Container,
   VStack,
   Stack,
+  Grid,
+  GridItem,
   Heading,
   Text,
   Button,
@@ -13,15 +15,24 @@ import {
   HStack,
   SimpleGrid,
   Spinner,
-  Image,
-  Flex
+  Image
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { announcementsAPI, activitiesAPI, resourcesAPI } from '../services/api';
 import { optimizarUrlCloudinary } from '../services/cloudinary';
+import MediaPlaceholder from '../components/MediaPlaceholder';
 
 const MotionVStack = motion(VStack);
+const MotionBox = motion(Box);
+
+// Props reutilizables para animar una sección al entrar en pantalla (una sola vez)
+const fadeInUp = {
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+  transition: { duration: 0.6, ease: 'easeOut' }
+};
 
 const Home = () => {
   const [activities, setActivities] = useState([]);
@@ -296,6 +307,18 @@ const Home = () => {
     }
   };
 
+  const getEmojiActividad = (tipo) => {
+    switch(tipo) {
+      case 'taller': return '🎨';
+      case 'charla': return '💬';
+      case 'evento': return '🎉';
+      case 'curso': return '📚';
+      case 'reunión': return '👥';
+      case 'voluntariado': return '🤝';
+      default: return '🎯';
+    }
+  };
+
   return (
     <Box>
       {/* Hero Section */}
@@ -368,9 +391,51 @@ const Home = () => {
         </Container>
       </Box>
 
+      {/* Sección Quiénes Somos */}
+      <Box bg="white" py={16}>
+        <Container maxW="container.xl">
+          <MotionBox {...fadeInUp}>
+            <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={10} alignItems="center">
+              <GridItem order={{ base: 2, md: 1 }}>
+                <Image
+                  src="/assets/Anuncio 17-07-2022.jpg"
+                  alt="Estudiantes en una sesión de Pre-Icfes popular de Euforia"
+                  borderRadius="xl"
+                  boxShadow="lg"
+                  w="100%"
+                />
+              </GridItem>
+              <GridItem order={{ base: 1, md: 2 }}>
+                <VStack align="start" spacing={4}>
+                  <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary">
+                    Quiénes Somos
+                  </Heading>
+                  <Text fontSize={{ base: "md", md: "lg" }} color="gray.600">
+                    Nuestra misión busca promover procesos educativos colectivos, basados en el
+                    encuentro de saberes, teniendo en cuenta las experiencias particulares de los
+                    y las jóvenes de Soacha, considerando la necesidad de reconocer diversas
+                    pedagogías transformadoras y fomentar el acceso a la educación superior.
+                  </Text>
+                  <Button
+                    as={Link}
+                    to="/quienes-somos"
+                    colorScheme="brand"
+                    bg="brand.accent2"
+                    color="white"
+                    _hover={{ bg: 'brand.accent5' }}
+                  >
+                    Conócenos
+                  </Button>
+                </VStack>
+              </GridItem>
+            </Grid>
+          </MotionBox>
+        </Container>
+      </Box>
+
       {/* Sección de Próximas Actividades (Anuncios) */}
       <Container maxW="container.xl" py={16}>
-        <VStack spacing={8}>
+        <MotionVStack spacing={8} {...fadeInUp}>
           <Box textAlign="center">
             <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary" mb={4}>
               Entérate de todo lo que pasa en Euforia
@@ -429,19 +494,13 @@ const Home = () => {
                           </Box>
                         )
                       ) : (
-                        <Box
-                          h="180px"
-                          w="100%"
-                          bg="brand.primary"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
-                          <Text fontSize="4xl" color="white">
-                            {activity.categoria === 'Evento' ? '🎉' : 
-                             activity.categoria === 'Educación' ? '📚' : '📢'}
-                          </Text>
-                        </Box>
+                        <MediaPlaceholder
+                          height="180px"
+                          emoji={
+                            activity.categoria === 'Evento' ? '🎉' :
+                            activity.categoria === 'Educación' ? '📚' : '📢'
+                          }
+                        />
                       )}
                       
                       <Box p={6}>
@@ -523,13 +582,13 @@ const Home = () => {
           >
             Ver Todos los Anuncios
           </Button>
-        </VStack>
+        </MotionVStack>
       </Container>
 
       {/* Sección de Enfoques */}
       <Box bg="brand.accent1" py={16}>
         <Container maxW="container.xl">
-          <VStack spacing={12}>
+          <MotionVStack spacing={12} {...fadeInUp}>
             <Box textAlign="center">
               <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary" mb={4}>
                 Nuestros Enfoques
@@ -568,13 +627,13 @@ const Home = () => {
                 </Card>
               ))}
             </SimpleGrid>
-          </VStack>
+          </MotionVStack>
         </Container>
       </Box>
 
       {/* Sección de Actividades Destacadas */}
       <Container maxW="container.xl" py={16}>
-        <VStack spacing={8}>
+        <MotionVStack spacing={8} {...fadeInUp}>
           <Box textAlign="center">
             <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary" mb={4}>
               🎯 Actividades Destacadas
@@ -609,38 +668,11 @@ const Home = () => {
                             h="100%"
                             objectFit="cover"
                             objectPosition="top"
-                            fallback={
-                              <Flex w="100%" h="100%" align="center" justify="center" bg="brand.primary">
-                                <Text fontSize="4xl" color="white">
-                                  {actividad.tipo === 'taller' ? '🎨' :
-                                   actividad.tipo === 'charla' ? '💬' :
-                                   actividad.tipo === 'evento' ? '🎉' :
-                                   actividad.tipo === 'curso' ? '📚' :
-                                   actividad.tipo === 'reunión' ? '👥' :
-                                   actividad.tipo === 'voluntariado' ? '🤝' : '🎯'}
-                                </Text>
-                              </Flex>
-                            }
+                            fallback={<MediaPlaceholder height="180px" emoji={getEmojiActividad(actividad.tipo)} />}
                           />
                         </Box>
                       ) : (
-                        <Box
-                          h="180px"
-                          w="100%"
-                          bg="brand.primary"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
-                          <Text fontSize="4xl" color="white">
-                            {actividad.tipo === 'taller' ? '🎨' :
-                             actividad.tipo === 'charla' ? '💬' :
-                             actividad.tipo === 'evento' ? '🎉' :
-                             actividad.tipo === 'curso' ? '📚' :
-                             actividad.tipo === 'reunión' ? '👥' :
-                             actividad.tipo === 'voluntariado' ? '🤝' : '🎯'}
-                          </Text>
-                        </Box>
+                        <MediaPlaceholder height="180px" emoji={getEmojiActividad(actividad.tipo)} />
                       )}
                       
                       <Box p={6}>
@@ -702,13 +734,13 @@ const Home = () => {
           >
             Ver Todas las Actividades
           </Button>
-        </VStack>
+        </MotionVStack>
       </Container>
 
       {/* Sección de Recursos Recientes */}
       <Box bg="brand.accent1" py={16}>
         <Container maxW="container.xl">
-          <VStack spacing={8}>
+          <MotionVStack spacing={8} {...fadeInUp}>
             <Box textAlign="center">
               <Heading as="h2" size={{ base: "lg", md: "xl" }} color="brand.secondary" mb={4}>
                 📚 Recursos Recientes
@@ -779,7 +811,7 @@ const Home = () => {
             >
               Ver Todos los Recursos
             </Button>
-          </VStack>
+          </MotionVStack>
         </Container>
       </Box>
     </Box>

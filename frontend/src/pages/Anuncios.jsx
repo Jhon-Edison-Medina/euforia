@@ -49,6 +49,7 @@ import { announcementsAPI } from '../services/api';
 import { optimizarUrlCloudinary } from '../services/cloudinary';
 import { Link } from 'react-router-dom';
 import { FaImages } from 'react-icons/fa';
+import MediaPlaceholder from '../components/MediaPlaceholder';
 
 // Configuración de paginación
 const ITEMS_PER_PAGE = 9;
@@ -222,28 +223,19 @@ const Anuncios = () => {
     const info = getPrimerArchivo(anuncio);
     if (!info) {
       return (
-        <Flex
-          h="200px"
-          bg="brand.primary"
-          align="center"
-          justify="center"
-          direction="column"
-          p={4}
-        >
-          <Text fontSize="5xl" mb={2}>
-            {anuncio.categoria === 'Evento' ? '🎉' :
-             anuncio.categoria === 'Educación' ? '📚' :
-             anuncio.categoria === 'Derechos Humanos' ? '⚖️' :
-             anuncio.categoria === 'Medio Ambiente' ? '🌱' :
-             anuncio.categoria === 'Género' ? '♀️' :
-             anuncio.categoria === 'Investigación' ? '🔬' :
-             anuncio.categoria === 'Salud' ? '🏥' :
-             anuncio.categoria === 'Comunidad' ? '👥' : '📢'}
-          </Text>
-          <Text fontSize="sm" color="white" textAlign="center">
-            {anuncio.categoria || 'Anuncio'}
-          </Text>
-        </Flex>
+        <MediaPlaceholder
+          emoji={
+            anuncio.categoria === 'Evento' ? '🎉' :
+            anuncio.categoria === 'Educación' ? '📚' :
+            anuncio.categoria === 'Derechos Humanos' ? '⚖️' :
+            anuncio.categoria === 'Medio Ambiente' ? '🌱' :
+            anuncio.categoria === 'Género' ? '♀️' :
+            anuncio.categoria === 'Investigación' ? '🔬' :
+            anuncio.categoria === 'Salud' ? '🏥' :
+            anuncio.categoria === 'Comunidad' ? '👥' : '📢'
+          }
+          label={anuncio.categoria || 'Anuncio'}
+        />
       );
     }
 

@@ -57,6 +57,7 @@ import {
 import { activitiesAPI } from '../services/api';
 import { optimizarUrlCloudinary } from '../services/cloudinary';
 import { Link } from 'react-router-dom';
+import MediaPlaceholder from '../components/MediaPlaceholder';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -293,16 +294,16 @@ const Actividades = () => {
     const info = getPrimerArchivo(actividad);
     if (!info) {
       return (
-        <Flex h="200px" bg="brand.primary" align="center" justify="center" direction="column" p={4}>
-          <Text fontSize="5xl" mb={2}>
-            {actividad.tipo === 'taller' ? '🎨' :
-             actividad.tipo === 'charla' ? '💬' :
-             actividad.tipo === 'evento' ? '🎉' :
-             actividad.tipo === 'curso' ? '📚' :
-             actividad.tipo === 'reunion' ? '👥' : '📅'}
-          </Text>
-          <Text fontSize="sm" color="white" textAlign="center">{actividad.categoria || 'Actividad'}</Text>
-        </Flex>
+        <MediaPlaceholder
+          emoji={
+            actividad.tipo === 'taller' ? '🎨' :
+            actividad.tipo === 'charla' ? '💬' :
+            actividad.tipo === 'evento' ? '🎉' :
+            actividad.tipo === 'curso' ? '📚' :
+            actividad.tipo === 'reunion' ? '👥' : '📅'
+          }
+          label={actividad.categoria || 'Actividad'}
+        />
       );
     }
 

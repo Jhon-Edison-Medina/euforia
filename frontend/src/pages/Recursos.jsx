@@ -57,6 +57,7 @@ import {
 } from 'react-icons/fa';
 import { resourcesAPI } from '../services/api';
 import { optimizarUrlCloudinary } from '../services/cloudinary';
+import MediaPlaceholder from '../components/MediaPlaceholder';
 import { Link } from 'react-router-dom';
 
 const ITEMS_PER_PAGE = 9;
@@ -281,10 +282,7 @@ const Recursos = () => {
       // Sin archivo multimedia, mostrar icono según tipo de recurso
       const IconComponent = getFileIcon(recurso.tipo, null);
       return (
-        <Flex h="200px" bg="brand.primary" align="center" justify="center" direction="column" p={4}>
-          <Icon as={IconComponent} boxSize={16} color="white" mb={2} />
-          <Text fontSize="sm" color="white" textAlign="center">{recurso.categoria || 'Recurso'}</Text>
-        </Flex>
+        <MediaPlaceholder icon={IconComponent} label={recurso.categoria || 'Recurso'} />
       );
     }
 
